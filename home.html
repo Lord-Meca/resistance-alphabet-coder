@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traducteur de code codé</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #212121;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 400px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 60px;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+         
+            resize: none;
+            width: 100%;
+        }
+
+        #resultat {
+            color: white;
+            margin-top: 16px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        #copyButton {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #copyButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Traducteur de code codé</h1>
+
+    <label for="francais">Français vers Code Codé:</label>
+    <textarea id="francais" rows="4" cols="50"></textarea>
+    <br><br>
+    <label for="code">Code Codé vers Français:</label>
+    <textarea id="code" rows="4" cols="50"></textarea>
+    <br><br>
+    <div id="resultat"></div>
+    <button id="copyButton">Copier le résultat</button>
+
+    <script>
+        const alphabetCode = {
+            'A': '0XO01',
+            'B': '10ZA0',
+            'C': '8+RF',
+            'D': '84',
+            'E': 'OEX',
+            'F': '45',
+            'G': '46',
+            'H': 'UUU789',
+            'I': 'F42',
+            'J': 'ZD',
+            'K': '978',
+            'L': 'VGC',
+            'M': 'UISDL+9',
+            'N': 'DZAC1',
+            'O': 'DCC',
+            'P': '45AF',
+            'Q': '7812',
+            'R': '00220012',
+            'S': '152DF',
+            'T': 'IODC',
+            'U': 'APLD110012',
+            'V': 'HZD75',
+            'W': 'E88KL',
+            'X': 'BBNDX88',
+            'Y': 'I44_585',
+            'Z': '100220023',
+            ' ': '-'
+        };
+
+        function frenchToCode(text) {
+            let code = "";
+            for (let letter of text.toUpperCase()) {
+                if (letter in alphabetCode) {
+                    code += alphabetCode[letter] + " ";
+                } else {
+                    code += letter + " ";
+                }
+            }
+            return code.trim();
+        }
+
+        function codeToFrench(code) {
+            const words = code.split(" ");
+            let french = "";
+            for (let word of words) {
+                if (Object.values(alphabetCode).includes(word)) {
+                    for (let [letter, codeLetter] of Object.entries(alphabetCode)) {
+                        if (codeLetter === word) {
+                            french += letter;
+                        }
+                    }
+                } else {
+                    french += word;
+                }
+            }
+            return french;
+        }
+
+        document.getElementById("francais").addEventListener("input", function() {
+            const texteFr = this.value.trim();
+            document.getElementById("resultat").innerText = frenchToCode(texteFr);
+        });
+
+        document.getElementById("code").addEventListener("input", function() {
+            const texteCode = this.value.trim();
+            document.getElementById("resultat").innerText = codeToFrench(texteCode);
+        });
+
+        document.getElementById("copyButton").addEventListener("click", function() {
+            const resultat = document.getElementById("resultat");
+            const texteCopie = resultat.innerText;
+
+            const tempInput = document.createElement("input");
+            tempInput.value = texteCopie;
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999);
+
+            document.execCommand("copy");
+
+            document.body.removeChild(tempInput);
+        });
+    </script>
+</body>
+</html>
